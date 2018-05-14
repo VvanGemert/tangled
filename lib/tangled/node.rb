@@ -30,7 +30,7 @@ module Tangled
            status['latest_solid_subtangle_milestone']
       return false \
         if status['latest_milestone_index'] !=
-           info['latest_solid_subtangle_milestone_index']
+           status['latest_solid_subtangle_milestone_index']
       true
     end
   end

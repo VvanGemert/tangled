@@ -18,7 +18,7 @@ module Tangled
     end
 
     def add_address
-      address = @account.getNewAddress
+      address = @account.getNewAddress(checksum: true)
       transfer(address) # Add address to Tangle
       address
     end
