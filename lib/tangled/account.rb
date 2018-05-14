@@ -29,9 +29,13 @@ module Tangled
         value: value,
         message: Tangled.util.toTrytes(message)
       }]
-      depth = 3
-      min_weight_magnitude = 9
-      @account.sendTransfer(depth, min_weight_magnitude, transfers)
+      transactions =
+        @account.sendTransfer(Tangled.configuration.depth,
+                              Tangled.configuration.min_weight_magnitude,
+                              transfers)
+      transactions.map do |transaction|
+        Transaction.new(transaction)
+      end
     end
 
     def transfers

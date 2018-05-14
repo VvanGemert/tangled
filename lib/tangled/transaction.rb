@@ -1,8 +1,34 @@
 module Tangled
   # Transaction
   class Transaction
+    attr_accessor :transaction
+
     def initialize(transaction)
       @transaction = transaction
+      @hash = transaction.hash
+      @tag = transaction.tag
+      @address = transaction.address
+      @timestamp = transaction.timestamp
+    end
+
+    def info
+      {
+        hash: @transaction.hash,
+        tag: @transaction.tag,
+        message_trytes: @transaction.signatureMessageFragment,
+        address: @transaction.address,
+        value: @transaction.value,
+        obsolete_tag: @transaction.obsoleteTag,
+        timestamp: @transaction.timestamp,
+        current_index: @transaction.currentIndex,
+        last_index: @transaction.lastIndex,
+        bundle: @transaction.bundle,
+        trunk_transaction: @transaction.trunkTransaction,
+        branch_transaction: @transaction.branchTransaction,
+        attachment_timestamp: @transaction.attachmentTimestamp,
+        none: @transaction.nonce,
+        persistence: @transaction.persistence
+      }
     end
 
     def message
@@ -11,20 +37,8 @@ module Tangled
       )
     end
 
-    def hash
-      @transaction.hash
-    end
-
-    def tag
-      @transaction.tag
-    end
-
-    def address
-      @transaction.address
-    end
-
-    def timestamp
-      @transaction.timestamp
+    def valid?
+      @transaction.valid?
     end
 
     def confirmed?

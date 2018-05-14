@@ -22,7 +22,8 @@ class AccountTest < Minitest::Test
     account_to = Tangled.account(seed_to)
 
     address = account_to.add_address
-    @account.transfer(address, 'tangled')
+    transactions = @account.transfer(address, 'tangled')
+    assert transactions.first.valid?
 
     assert_equal account_to.transfers.last.transactions.first.message, 'tangled'
   end
