@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     tangled (0.1.0)
+      ffi-rzmq
       iota-ruby
 
 GEM
@@ -11,6 +12,11 @@ GEM
     byebug (10.0.2)
     coderay (1.1.2)
     digest-sha3 (1.1.0)
+    ffi (1.9.23)
+    ffi-rzmq (2.0.6)
+      ffi-rzmq-core (>= 1.0.6)
+    ffi-rzmq-core (1.0.6)
+      ffi
     iota-ruby (1.1.4)
       digest-sha3 (~> 1.1)
     method_source (0.9.0)

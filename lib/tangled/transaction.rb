@@ -5,10 +5,6 @@ module Tangled
 
     def initialize(transaction)
       @transaction = transaction
-      @hash = transaction.hash
-      @tag = transaction.tag
-      @address = transaction.address
-      @timestamp = transaction.timestamp
     end
 
     def info

@@ -8,6 +8,7 @@ require 'tangled/node'
 require 'tangled/account'
 require 'tangled/transfer'
 require 'tangled/transaction'
+require 'tangled/stream'
 
 # Tangled
 module Tangled
@@ -34,5 +35,9 @@ module Tangled
   def self.configure
     self.configuration ||= Configuration.new
     yield(configuration)
+  end
+
+  def self.stream
+    Stream.new
   end
 end
