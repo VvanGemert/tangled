@@ -6,7 +6,7 @@ module Tangled
     def run
       context = ZMQ::Context.new
       subscriber = context.socket ZMQ::SUB
-      subscriber.connect 'tcp://localhost:5556'
+      subscriber.connect Tangled.configuration.stream_url
       subscriber.setsockopt ZMQ::SUBSCRIBE, 'tx'
 
       trap('INT') do
