@@ -14,21 +14,24 @@ module Tangled
         puts 'Stopping stream.'
         subscriber.close
         context.terminate
-        exit
+        throw :quit
       end
 
       start_loop(subscriber)
     end
 
     def start_loop(subscriber)
-      loop do
-        transaction = ''
-        subscriber.recv_string(transaction)
-        subscriber.recv_string(_transaction_trytes = '')
+      catch :quit do
+        loop do
+          transaction = ''
+          subscriber.recv_string(transaction)
+          subscriber.recv_string(_transaction_trytes = '')
 
-        data = parse_transaction(transaction)
-        puts data
+          data = parse_transaction(transaction)
+          puts data
+        end
       end
+      :stopped
     end
 
     def parse_transaction(transaction)
