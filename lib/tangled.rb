@@ -10,6 +10,8 @@ require 'tangled/transfer'
 require 'tangled/transaction'
 require 'tangled/stream'
 
+require 'tangled/multisig'
+
 # Tangled
 module Tangled
   class << self
