@@ -7,6 +7,9 @@ class FlashTest < Minitest::Test
   SIGNERS_COUNT = 2
   SECURITY = 2
 
+  ONE_SETTLEMENT_ADDRESS = "USERONE9ADDRESS9USERONE9ADDRESS9USERONE9ADDRESS9USERONE9ADDRESS9USERONE9ADDRESS9U"
+  TWO_SETTLEMENT_ADDRESS = "USERTWO9ADDRESS9USERTWO9ADDRESS9USERTWO9ADDRESS9USERTWO9ADDRESS9USERTWO9ADDRESS9U"
+
 
   def setup
     @multisig = Tangled::Multisig.new
@@ -23,7 +26,8 @@ class FlashTest < Minitest::Test
         balance: CHANNEL_BALANCE,
         deposit: DEPOSITS.dup,
         outputs: {},
-        transfers: []
+        transfers: [],
+        settlement_addresses: [ONE_SETTLEMENT_ADDRESS, TWO_SETTLEMENT_ADDRESS]
       }
     }
 
@@ -40,18 +44,39 @@ class FlashTest < Minitest::Test
         balance: CHANNEL_BALANCE,
         deposit: DEPOSITS.dup,
         outputs: {},
-        transfers: []
+        transfers: [],
+        settlement_addresses: [ONE_SETTLEMENT_ADDRESS, TWO_SETTLEMENT_ADDRESS]
       }
     }
   end
 
   def test_if_node_info_exists
-    all_digests = create_digests
-    one_multisigs = create_multisigs(@user_one, all_digests)
-    p one_multisigs
 
+    # Make an array of digests
+    all_digests = create_digests
+
+    # Create multisigs
+    one_multisigs = create_multisigs(@user_one, all_digests)
     two_multisigs = create_multisigs(@user_two, all_digests)
-    p two_multisigs
+
+    # Set remainder addresses
+    @user_one[:flash][:remainder_address] = one_multisigs.shift
+    @user_two[:flash][:remainder_address] = two_multisigs.shift
+
+    # TODO: Nest Trees
+
+    # Set Flash root
+    @user_one[:flash][:root] = one_multisigs.shift
+    @user_two[:flash][:root] = two_multisigs.shift
+
+    # Set settlement addresses
+    # Done in original loop
+
+    # Set digest/key index
+    @user_one[:index] = @user_one[:partial_digests].size
+    @user_two[:index] = @user_two[:partial_digests].size
+
+    p @user_one
   end
 
   def create_digests
