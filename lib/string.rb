@@ -9,4 +9,8 @@ class String
       .gsub(/__+/, '_')
       .downcase
   end
+
+  def camelcase
+    split('_').collect(&:capitalize).join
+  end
 end
